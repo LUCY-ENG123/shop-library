@@ -3,21 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>PN-1047</title>
-
-<script type="module"
-  src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
-</script>
 
 <style>
 :root{
-  --bg:#0b1f3a;
+  --bg:#0b1f3a;      /* deep blue */
   --card:#ffffff;
-  --text:#111111;
-  --muted:#3b3b3b;
-  --accent:#1f6feb;
-  --accent2:#222222;
+  --text:#0b0b0b;    /* bold black */
+  --muted:#3d3d3d;
+  --accent:#1f6feb;  /* blue button */
+  --dark:#1d1d1d;    /* dark button */
 }
 
 *{ box-sizing:border-box; }
@@ -38,47 +33,37 @@ body{
 .card{
   background: var(--card);
   border-radius: 16px;
-  padding: 18px 18px 16px;
+  padding: 18px;
   margin: 14px 0;
   box-shadow: 0 8px 18px rgba(0,0,0,.15);
-}
-
-.header{
-  text-align:left;
 }
 
 h1{
   margin:0 0 6px 0;
   font-size: 34px;
   font-weight: 900;
-  letter-spacing: .2px;
 }
 
 .subtitle{
   margin:0;
   font-size: 16px;
+  font-weight: 700;
   color: var(--muted);
-  font-weight: 600;
 }
 
 .section-title{
+  margin:0 0 12px 0;
+  font-size: 22px;
+  font-weight: 900;
   display:flex;
   align-items:center;
   gap:10px;
-  margin:0 0 12px 0;
-  font-size: 24px;
-  font-weight: 900;
 }
 
-.btn-row{
-  display:flex;
-  justify-content:center;  /* centers buttons */
-  margin-top: 10px;
-}
-
-.button{
-  display:inline-block;
-  width: min(520px, 100%); /* centered, capped width */
+.btn{
+  display:block;
+  width: min(520px, 100%);
+  margin: 10px auto 0;
   text-align:center;
   padding: 14px 16px;
   border-radius: 12px;
@@ -86,129 +71,66 @@ h1{
   font-weight: 900;
   text-decoration:none;
   color:#fff;
-  background: var(--accent);
-  border: none;
 }
 
-.button.secondary{
-  background: var(--accent2);
-}
+.btn.pdf{ background: var(--accent); }
+.btn.model{ background: var(--dark); }
 
 .note{
   margin:10px 0 0;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 600;
   text-align:center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
 }
 
-.viewer-wrap{
-  margin-top: 12px;
-}
-
-model-viewer{
-  width: 100%;
-  height: 52vh;            /* good phone height */
-  min-height: 320px;
-  border-radius: 14px;
-  border: 1px solid #d0d0d0;
-  background: #f4f4f4;
-}
-
-.small-links{
+.links{
   margin-top: 10px;
   text-align:center;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
 }
 
-.small-links a{
-  color: #0b4fcf;
-  text-decoration: none;
+.links a{
+  color:#0b4fcf;
+  text-decoration:none;
 }
-
-.small-links a:hover{
-  text-decoration: underline;
-}
-
-hr{
-  border:none;
-  border-top:1px solid #e7e7e7;
-  margin: 14px 0 8px;
-}
+.links a:hover{ text-decoration:underline; }
 </style>
 </head>
 
 <body>
-<div class="container">
+  <div class="container">
 
-  <!-- HEADER -->
-  <div class="card header">
-    <h1>PN-1047</h1>
-    <p class="subtitle">Scan QR → open drawing or rotate the 3D model</p>
-  </div>
+    <div class="card">
+      <h1>PN-1047</h1>
+      <p class="subtitle">Scan QR → open drawing or rotate the 3D model</p>
+    </div>
 
-  <!-- PDF CARD -->
-  <div class="card">
-    <div class="section-title">📄 Drawing</div>
-
-    <div class="btn-row">
-      <a class="button" href="./PN-1047.pdf" target="_blank" rel="noopener">
+    <div class="card">
+      <div class="section-title">📄 Drawing</div>
+      <a class="btn pdf" href="./PN-1047.pdf" target="_blank" rel="noopener">
         Open PDF (Full Screen)
       </a>
+      <p class="note">Pinch-zoom in your phone’s PDF viewer.</p>
     </div>
 
-    <p class="note">Uses your phone’s native PDF viewer for pinch-zoom.</p>
-  </div>
-
-  <!-- 3D CARD -->
-<div class="card">
-  <div class="section-title">🧩 3D Model</div>
-
-  <div class="btn-row">
-    <a class="button secondary"
-       href="https://autode.sk/3LqOb6V"
-       target="_blank" rel="noopener">
-      Open 3D Model (Autodesk Viewer)
-    </a>
-  </div>
-
-  <p class="note">Opens in Autodesk Viewer (phone-friendly rotate/zoom).</p>
-
-  <div class="small-links">
-    <a href="./PN-1047.step" target="_blank" rel="noopener">Download STEP</a>
-  </div>
-</div>
-
-    <!-- Embedded viewer -->
-    <div class="viewer-wrap">
-      <model-viewer
-        src="./PN-1047.glb"
-        camera-controls
-        touch-action="pan-y"
-        shadow-intensity="1"
-        exposure="1"
-        loading="eager">
-
-        <!-- Visible fallback if GLB fails -->
-        <div slot="poster" style="padding:14px; text-align:center; font-weight:800; color:#333;">
-          Loading 3D model…
-        </div>
-      </model-viewer>
-    </div>
-
-    <div class="btn-row">
-      <a class="button secondary" href="./PN-1047.glb" target="_blank" rel="noopener">
-        Open 3D Model File (Fallback)
+    <div class="card">
+      <div class="section-title">🧩 3D Model</div>
+      <a class="btn model"
+         href="https://autode.sk/3LqOb6V"
+         target="_blank" rel="noopener">
+        Open 3D Model (Autodesk Viewer)
       </a>
+      <p class="note">Opens in your browser (no app required).</p>
+
+      <!-- Optional: keep this or delete it -->
+      <div class="links">
+        <a href="./PN-1047.step" target="_blank" rel="noopener">Download STEP</a>
+      </div>
     </div>
 
-    <div class="small-links">
-      <a href="./PN-1047.step" target="_blank" rel="noopener">Download STEP (Desktop CAD)</a>
-    </div>
-
-    <p class="note">If the 3D viewer stays blank, the GLB may need re-exporting (we can fix that).</p>
   </div>
-
-</div>
 </body>
 </html>
+
