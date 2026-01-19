@@ -103,15 +103,15 @@ h1{
   <div class="container">
 
     <div class="card">
-      <h1>PN-1047</h1>
+      <h1 id="partTitle"></h1>
       <p class="subtitle">Scan QR → open drawing or rotate the 3D model</p>
     </div>
 
     <div class="card">
       <div class="section-title">📄 Drawing</div>
-      <a class="btn pdf" href="./PN-1047.pdf" target="_blank" rel="noopener">
-        Open PDF (Full Screen)
-      </a>
+     <a class="btn pdf" id="pdfLink" target="_blank">
+  Open PDF (Full Screen)
+</a>
       <p class="note">Pinch-zoom in your phone’s PDF viewer.</p>
     </div>
 
@@ -131,6 +131,19 @@ h1{
     </div>
 
   </div>
+  <script>
+  // Get folder name (PN-XXXX)
+  const pathParts = window.location.pathname.split("/").filter(Boolean);
+  const partNumber = pathParts[pathParts.length - 1];
+
+  // Set page title + header
+  document.getElementById("partTitle").textContent = partNumber;
+  document.title = partNumber;
+
+  // Auto-link PDF with same name
+  document.getElementById("pdfLink").href = `./${partNumber}.pdf`;
+</script>
+
 </body>
 </html>
 
