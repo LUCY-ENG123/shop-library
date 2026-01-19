@@ -11,101 +11,189 @@
 </script>
 
 <style>
-:root {
-  --bg: #0b1f3a;
-  --card: #ffffff;
-  --text: #111111;
-  --muted: #444;
-  --accent: #1f6feb;
+:root{
+  --bg:#0b1f3a;
+  --card:#ffffff;
+  --text:#111111;
+  --muted:#3b3b3b;
+  --accent:#1f6feb;
+  --accent2:#222222;
 }
 
-body {
-  margin: 0;
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
   font-family: Arial, Helvetica, sans-serif;
   background: var(--bg);
   color: var(--text);
 }
 
-.container {
-  max-width: 900px;
+.container{
+  max-width: 760px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 18px 14px 28px;
 }
 
-.card {
+.card{
   background: var(--card);
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 16px;
+  border-radius: 16px;
+  padding: 18px 18px 16px;
+  margin: 14px 0;
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
 }
 
-h1 {
-  margin: 0 0 6px 0;
-  font-size: 28px;
-  font-weight: 800;
+.header{
+  text-align:left;
 }
 
-.subtitle {
-  font-size: 15px;
+h1{
+  margin:0 0 6px 0;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: .2px;
+}
+
+.subtitle{
+  margin:0;
+  font-size: 16px;
   color: var(--muted);
+  font-weight: 600;
 }
 
-.button {
-  display: block;
-  width: 100%;
-  text-align: center;
-  padding: 14px;
-  margin-top: 12px;
-  border-radius: 10px;
-  font-size: 18px;
-  font-weight: 700;
-  text-decoration: none;
-  color: white;
-  background: var(--accent);
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:0 0 12px 0;
+  font-size: 24px;
+  font-weight: 900;
 }
 
-.button.secondary {
-  background: #333;
+.btn-row{
+  display:flex;
+  justify-content:center;  /* centers buttons */
+  margin-top: 10px;
 }
 
-.viewer {
-  width: 100%;
-  height: 70vh;
+.button{
+  display:inline-block;
+  width: min(520px, 100%); /* centered, capped width */
+  text-align:center;
+  padding: 14px 16px;
   border-radius: 12px;
-  border: 1px solid #ccc;
+  font-size: 18px;
+  font-weight: 900;
+  text-decoration:none;
+  color:#fff;
+  background: var(--accent);
+  border: none;
 }
 
-.note {
-  font-size: 14px;
+.button.secondary{
+  background: var(--accent2);
+}
+
+.note{
+  margin:10px 0 0;
   color: var(--muted);
-  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align:center;
+}
+
+.viewer-wrap{
+  margin-top: 12px;
+}
+
+model-viewer{
+  width: 100%;
+  height: 52vh;            /* good phone height */
+  min-height: 320px;
+  border-radius: 14px;
+  border: 1px solid #d0d0d0;
+  background: #f4f4f4;
+}
+
+.small-links{
+  margin-top: 10px;
+  text-align:center;
+  font-weight: 700;
+}
+
+.small-links a{
+  color: #0b4fcf;
+  text-decoration: none;
+}
+
+.small-links a:hover{
+  text-decoration: underline;
+}
+
+hr{
+  border:none;
+  border-top:1px solid #e7e7e7;
+  margin: 14px 0 8px;
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
   <!-- HEADER -->
-  <div class="card">
+  <div class="card header">
     <h1>PN-1047</h1>
-    <div class="subtitle">Scan QR → view drawing or rotate model</div>
+    <p class="subtitle">Scan QR → open drawing or rotate the 3D model</p>
   </div>
 
-  <!-- PDF -->
+  <!-- PDF CARD -->
   <div class="card">
-    <h2>📄 Drawing</h2>
-    <a class="button" href="./PN-1047.pdf" target="_blank">
-      Open PDF (Full Screen)
-    </a>
-    <p class="note">Opens in your phone’s native PDF viewer for pinch-zoom.</p>
+    <div class="section-title">📄 Drawing</div>
+
+    <div class="btn-row">
+      <a class="button" href="./PN-1047.pdf" target="_blank" rel="noopener">
+        Open PDF (Full Screen)
+      </a>
+    </div>
+
+    <p class="note">Uses your phone’s native PDF viewer for pinch-zoom.</p>
   </div>
 
-  <!-- 3D MODEL -->
+  <!-- 3D CARD -->
   <div class="card">
-    <h2>🧩 3D Model</h2>
+    <div class="section-title">🧩 3D Model</div>
 
-    <model-viewer
-      class="viewer"
-      src="./PN-1047.gl
+    <!-- Embedded viewer -->
+    <div class="viewer-wrap">
+      <model-viewer
+        src="./PN-1047.glb"
+        camera-controls
+        touch-action="pan-y"
+        shadow-intensity="1"
+        exposure="1"
+        loading="eager">
+
+        <!-- Visible fallback if GLB fails -->
+        <div slot="poster" style="padding:14px; text-align:center; font-weight:800; color:#333;">
+          Loading 3D model…
+        </div>
+      </model-viewer>
+    </div>
+
+    <div class="btn-row">
+      <a class="button secondary" href="./PN-1047.glb" target="_blank" rel="noopener">
+        Open 3D Model File (Fallback)
+      </a>
+    </div>
+
+    <div class="small-links">
+      <a href="./PN-1047.step" target="_blank" rel="noopener">Download STEP (Desktop CAD)</a>
+    </div>
+
+    <p class="note">If the 3D viewer stays blank, the GLB may need re-exporting (we can fix that).</p>
+  </div>
+
+</div>
+</body>
+</html>
