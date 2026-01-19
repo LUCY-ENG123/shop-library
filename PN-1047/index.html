@@ -11,38 +11,101 @@
 </script>
 
 <style>
-body { font-family: Arial, sans-serif; margin: 12px; }
-h1 { margin-bottom: 6px; }
-.section { margin-top: 16px; }
-iframe { width: 100%; height: 65vh; border: 1px solid #ccc; border-radius: 10px; }
-model-viewer { width: 100%; height: 65vh; border: 1px solid #ccc; border-radius: 10px; background:#f4f4f4; }
-.note { font-size: 14px; color: #555; }
+:root {
+  --bg: #0b1f3a;
+  --card: #ffffff;
+  --text: #111111;
+  --muted: #444;
+  --accent: #1f6feb;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+h1 {
+  margin: 0 0 6px 0;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 14px;
+  margin-top: 12px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  color: white;
+  background: var(--accent);
+}
+
+.button.secondary {
+  background: #333;
+}
+
+.viewer {
+  width: 100%;
+  height: 70vh;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+}
+
+.note {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 8px;
+}
 </style>
 </head>
 
 <body>
 
-<h1>PN-1047</h1>
-<p class="note">Scan QR → view drawing or rotate model</p>
+<div class="container">
 
-<div class="section">
-  <h2>📄 Drawing (PDF)</h2>
-  <iframe src="./PN-1047.pdf"></iframe>
-</div>
+  <!-- HEADER -->
+  <div class="card">
+    <h1>PN-1047</h1>
+    <div class="subtitle">Scan QR → view drawing or rotate model</div>
+  </div>
 
-<div class="section">
-  <h2>🧩 3D Model</h2>
-  <model-viewer
-    src="./PN-1047.glb"
-    camera-controls
-    auto-rotate
-    touch-action="pan-y">
-  </model-viewer>
+  <!-- PDF -->
+  <div class="card">
+    <h2>📄 Drawing</h2>
+    <a class="button" href="./PN-1047.pdf" target="_blank">
+      Open PDF (Full Screen)
+    </a>
+    <p class="note">Opens in your phone’s native PDF viewer for pinch-zoom.</p>
+  </div>
 
-  <p class="note">
-    <a href="./PN-1047.step">Download STEP</a>
-  </p>
-</div>
+  <!-- 3D MODEL -->
+  <div class="card">
+    <h2>🧩 3D Model</h2>
 
-</body>
-</html>
+    <model-viewer
+      class="viewer"
+      src="./PN-1047.gl
