@@ -96,8 +96,12 @@ for folder in os.listdir(ROOT):
     qr_size = QR_SIZE_INCHES * inch
     margin = MARGIN_INCHES * inch
 
-    x = width - qr_size - margin
-    y = margin
+    TITLEBLOCK_LEFT_X = 10.0 * inch      # left edge of title block
+    TITLEBLOCK_BOTTOM_Y = 0.45 * inch    # move QR up
+    GAP = 0.05 * inch                    # tighter to title block
+
+    x = TITLEBLOCK_LEFT_X - qr_size - GAP
+    y = TITLEBLOCK_BOTTOM_Y
 
     c.drawImage(qr_path, x, y, qr_size, qr_size, mask="auto")
     c.save()
