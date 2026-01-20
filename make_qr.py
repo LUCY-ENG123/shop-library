@@ -9,7 +9,8 @@ BASE_URL = "https://lucy-eng123.github.io/shop-library/"
 # Allow spaces in folder names:
 # PN-1047
 # PN-TRUCK STEP 2 PIECE SHAFT COLLAR
-PN_FOLDER_RE = re.compile(r"^PN-[A-Za-z0-9 _-]+$")
+if os.path.isdir(full) and not name.startswith("_"):
+
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
