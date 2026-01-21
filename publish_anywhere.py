@@ -282,9 +282,9 @@ def main():
 autodesk_link = load_autodesk_link(dst_dir)
 
 if step_src:
-    	ans = input("\nUpdate Autodesk link? (y/n, Enter = no): ").strip().lower()
+        ans = input("\nUpdate Autodesk link? (y/n, Enter = no): ").strip().lower()
 
-    	if ans == "y" or not autodesk_link:
+        if ans == "y" or not autodesk_link:
         print("Opening Autodesk Viewer upload…")
         webbrowser.open(AUTODESK_UPLOAD_URL)
 
