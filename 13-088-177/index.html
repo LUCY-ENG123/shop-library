@@ -7,140 +7,139 @@
 
   <style>
     :root{
-      --bg:#0b1220;
-      --card:#121a2b;
-      --text:#e7eefc;
-      --muted:#a9b7d0;
-      --line:rgba(255,255,255,.10);
-      --btn:#1f6feb;
-      --btn2:#2ea043;
-      --shadow: 0 12px 30px rgba(0,0,0,.35);
-      --radius: 16px;
+      --bg1:#0b1220;
+      --bg2:#050914;
+      --card:#0f1a2b;
+      --card2:#0c1524;
+      --stroke:rgba(255,255,255,.10);
+      --text:#e9eef7;
+      --muted:rgba(233,238,247,.65);
+      --blue:#2d7dff;
+      --green:#26c281;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --r:18px;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 800px at 10% 0%, #182548 0%, var(--bg) 55%);
       color:var(--text);
+      background: radial-gradient(1200px 700px at 20% 0%, #1b2a49 0%, transparent 55%),
+                  radial-gradient(900px 600px at 100% 10%, #14334a 0%, transparent 55%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
     }
     .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 18px 14px 40px;
+      max-width:1100px;
+      margin: 20px auto;
+      padding: 0 14px 22px;
     }
-    header{
+    .topbar{
       display:flex;
-      gap:12px;
       align-items:center;
       justify-content:space-between;
-      margin-bottom:14px;
+      gap:10px;
+      margin-bottom:12px;
     }
     .title{
-      display:flex;
-      flex-direction:column;
-      gap:3px;
+      line-height:1.15;
     }
-    h1{
+    .title h1{
       margin:0;
-      font-size: 22px;
+      font-size:28px;
       letter-spacing:.2px;
     }
-    .sub{
-      margin:0;
+    .title .sub{
+      margin-top:6px;
+      font-size:13px;
       color:var(--muted);
-      font-size: 13px;
     }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius: 12px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      box-shadow: var(--shadow);
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{ filter:brightness(1.07); }
+    .btn.blue{ background: rgba(45,125,255,.20); border-color: rgba(45,125,255,.35); }
+    .btn.green{ background: rgba(38,194,129,.18); border-color: rgba(38,194,129,.35); }
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid var(--stroke);
+      border-radius: var(--r);
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .btnrow{
+    .actions{
       display:flex;
-      flex-wrap:wrap;
       gap:10px;
       padding: 14px;
-      border-bottom:1px solid var(--line);
-      background: rgba(0,0,0,.12);
+      background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,0));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      flex-wrap:wrap;
     }
-    a.btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      text-decoration:none;
-      color:white;
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 14px;
-      border:1px solid rgba(255,255,255,.10);
-      transition: transform .05s ease, filter .12s ease;
-      user-select:none;
-    }
-    a.btn:hover{ filter: brightness(1.05); }
-    a.btn:active{ transform: scale(.98); }
-    .btn.primary{ background: var(--btn); }
-    .btn.good{ background: var(--btn2); }
-    .btn.gray{ background: rgba(255,255,255,.10); color: var(--text); }
-
     .viewer{
-      height: calc(100vh - 210px);
-      min-height: 520px;
-      background: rgba(0,0,0,.25);
-    }
-    iframe{
       width:100%;
-      height:100%;
+      height: calc(100vh - 190px);
+      min-height: 520px;
       border:0;
-      display:block;
-      background:#111;
+      background: rgba(255,255,255,.03);
     }
-    .footer{
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 12px;
+    .foot{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12px;
       text-align:center;
-      opacity:.9;
     }
-    code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      background: rgba(255,255,255,.08);
-      padding: 2px 6px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
+
+    /* Phone tweaks */
+    @media (max-width: 540px){
+      .wrap{ margin: 14px auto; }
+      .title h1{ font-size:22px; }
+      .viewer{ height: calc(100vh - 220px); min-height: 420px; }
+      .btn{ width:100%; justify-content:center; }
+      .topbar{ align-items:flex-start; flex-direction:column; }
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <header>
+    <div class="topbar">
       <div class="title">
         <h1>13-088-177</h1>
-        <p class="sub">Shop Library • Scan QR → open drawing</p>
+        <div class="sub">Shop Library • Scan QR → open drawing</div>
       </div>
-      <a class="btn gray" href="../">⬅ Back</a>
-    </header>
-
-    <section class="card">
-      <div class="btnrow">
-        <a class="btn primary" href="13-088-177.pdf?v=1768957507" target="_blank">📄 Open PDF</a>
-        <a class="btn good" href="https://autode.sk/4qxApyE" target="_blank">🧊 3D Viewer</a>
-      </div>
-
-      <div class="viewer">
-        <iframe src="PART.pdf?v=1"></iframe>
-      </div>
-    </section>
-
-    <div class="footer">
-      If the PDF looks outdated, refresh once. Part page: <code>PART</code>
+      <a class="btn" href="../" title="Back to list">← Back</a>
     </div>
+
+    <div class="card">
+      <div class="actions">
+        <a class="btn blue" href="13-088-177.pdf?v=1768958525" target="_blank" rel="noopener">Open PDF</a>
+        <a id="viewerBtn" class="btn green" href="https://autode.sk/4jPUo97" target="_blank" rel="noopener">3D Viewer</a>
+      </div>
+
+      <iframe class="viewer" src="13-088-177.pdf?v=1768958525" loading="lazy"></iframe>
+    </div>
+
+    <div class="foot">If the PDF looks old on phone, refresh twice or clear browser cache.</div>
   </div>
+
+  <script>
+    // Hide 3D button if no link
+    (function(){
+      var a = document.getElementById("viewerBtn");
+      if (!a) return;
+      var href = (a.getAttribute("href") || "").trim();
+      if (!href || href === "https://autode.sk/4jPUo97" || href === "#") a.style.display = "none";
+    })();
+  </script>
 </body>
 </html>
-
