@@ -241,29 +241,24 @@ def try_get_clipboard_autodesk_link() -> Optional[str]:
         return None
 
 
-def update_index_html(dst_dir: str, part_name: str, autodesk_link: Optional[str], cache_bust: int) -> None:
+def update_index_html(dst_dir: str, part_name: str, autodesk_link: str | None, cache_bust: int):
     template_path = os.path.join(REPO_ROOT, TEMPLATE_DIR, TEMPLATE_FILE)
     if not os.path.exists(template_path):
         raise RuntimeError(f"Template not found: {template_path}")
 
     html = open(template_path, "r", encoding="utf-8").read()
 
-    html = re.sub(r"<title>.*?</title>", f"<title>{part_name}</title>", html, flags=re.I | re.S)
-    html = re.sub(r"<h1>.*?</h1>", f"<h1>{part_name}</h1>", html, flags=re.I | re.S)
-
-    # Update the FIRST pdf href we find in the template
-    pdf_href = f'{part_name}.pdf?v={cache_bust}'
-    html = re.sub(r'href="[^"]+\.pdf[^"]*"', f'href="{pdf_href}"', html, count=1)
-
-    # Update the FIRST autode.sk href we find in the template
-    if autodesk_link:
-        html = re.sub(r'href="https://autode\.sk/[^"]+"', f'href="{autodesk_link}"', html, count=1)
+    pdf_href = f"{part_name}.pdf?v={cache_bust}"
+    html = html.replace("{{PART}}", part_name)
+    html = html.replace("{{PDF}}", pdf_href)
+    html = html.replace("{{AUTODESK}}", autodesk_link.strip() if autodesk_link else "#")
 
     out_path = os.path.join(dst_dir, "index.html")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(html)
 
     print("Updated index.html")
+
 
 
 # ============================
