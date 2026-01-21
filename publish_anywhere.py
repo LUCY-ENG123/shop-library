@@ -278,14 +278,14 @@ def main():
     print("Copied stamped PDF + QR back to SOURCE folder:", src_dir)
 
 
-   # Autodesk link handling
+# Autodesk link handling
 autodesk_link = load_autodesk_link(dst_dir)
 
 if step_src:
-    	ans = input("\nUpdate Autodesk link? (y/n, Enter = no): ").strip().lower()
+    ans = input("\nUpdate Autodesk link? (y/n, Enter = no): ").strip().lower()
 
-    	if ans == "y" or not autodesk_link:
-        print("Opening Autodesk Viewer upload…")
+    if ans == "y" or not autodesk_link:
+        print("Opening Autodesk Viewer upload...")
         webbrowser.open(AUTODESK_UPLOAD_URL)
 
         input("After you COPY the autode.sk link, press ENTER here...")
@@ -301,7 +301,6 @@ if step_src:
         else:
             print("⚠ Not a valid autode.sk link. Keeping previous link.")
             autodesk_link = load_autodesk_link(dst_dir)
-
 
     # Update index.html with cache-bust so phones don't show old PDFs
     cache_bust = int(time.time())
