@@ -1,145 +1,116 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>{{PART}}</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <style>
-    :root{
-      --bg1:#0b1220;
-      --bg2:#050914;
-      --card:#0f1a2b;
-      --card2:#0c1524;
-      --stroke:rgba(255,255,255,.10);
-      --text:#e9eef7;
-      --muted:rgba(233,238,247,.65);
-      --blue:#2d7dff;
-      --green:#26c281;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --r:18px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background: radial-gradient(1200px 700px at 20% 0%, #1b2a49 0%, transparent 55%),
-                  radial-gradient(900px 600px at 100% 10%, #14334a 0%, transparent 55%),
-                  linear-gradient(180deg, var(--bg1), var(--bg2));
-    }
-    .wrap{
-      max-width:1100px;
-      margin: 20px auto;
-      padding: 0 14px 22px;
-    }
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:12px;
-    }
-    .title{
-      line-height:1.15;
-    }
-    .title h1{
-      margin:0;
-      font-size:28px;
-      letter-spacing:.2px;
-    }
-    .title .sub{
-      margin-top:6px;
-      font-size:13px;
-      color:var(--muted);
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 14px;
-      border-radius: 12px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      text-decoration:none;
-      box-shadow: var(--shadow);
-      user-select:none;
-      white-space:nowrap;
-    }
-    .btn:hover{ filter:brightness(1.07); }
-    .btn.blue{ background: rgba(45,125,255,.20); border-color: rgba(45,125,255,.35); }
-    .btn.green{ background: rgba(38,194,129,.18); border-color: rgba(38,194,129,.35); }
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid var(--stroke);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .actions{
-      display:flex;
-      gap:10px;
-      padding: 14px;
-      background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,0));
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      flex-wrap:wrap;
-    }
-    .viewer{
-      width:100%;
-      height: calc(100vh - 190px);
-      min-height: 520px;
-      border:0;
-      background: rgba(255,255,255,.03);
-    }
-    .foot{
-      margin-top:10px;
-      color:var(--muted);
-      font-size:12px;
-      text-align:center;
-    }
+<title>{{PART}}</title>
 
-    /* Phone tweaks */
-    @media (max-width: 540px){
-      .wrap{ margin: 14px auto; }
-      .title h1{ font-size:22px; }
-      .viewer{ height: calc(100vh - 220px); min-height: 420px; }
-      .btn{ width:100%; justify-content:center; }
-      .topbar{ align-items:flex-start; flex-direction:column; }
-    }
-  </style>
+<style>
+:root{
+  --bg:#0b1f3a;
+  --card:#ffffff;
+  --text:#0b0b0b;
+  --muted:#3d3d3d;
+  --accent:#1f6feb;
+  --dark:#1d1d1d;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container{
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 18px 14px 28px;
+}
+
+.card{
+  background: var(--card);
+  border-radius: 16px;
+  padding: 18px;
+  margin: 14px 0;
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
+}
+
+h1{
+  margin:0 0 6px 0;
+  font-size: 34px;
+  font-weight: 900;
+}
+
+.subtitle{
+  margin:0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.section-title{
+  margin:0 0 12px 0;
+  font-size: 22px;
+  font-weight: 900;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.btn{
+  display:block;
+  width: min(520px, 100%);
+  margin: 10px auto 0;
+  text-align:center;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 900;
+  text-decoration:none;
+  color:#fff;
+}
+
+.btn.pdf{ background: var(--accent); }
+.btn.model{ background: var(--dark); }
+
+.note{
+  margin:10px 0 0;
+  text-align:center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="title">
-        <h1>{{PART}}</h1>
-        <div class="sub">Shop Library • Scan QR → open drawing</div>
-      </div>
-      <a class="btn" href="../" title="Back to list">← Back</a>
+  <div class="container">
+
+    <div class="card">
+      <h1>{{PART}}</h1>
+      <p class="subtitle">Scan QR → open drawing or rotate the 3D model</p>
     </div>
 
     <div class="card">
-      <div class="actions">
-        <a class="btn blue" href="{{PDF}}" target="_blank" rel="noopener">Open PDF</a>
-        <a id="viewerBtn" class="btn green" href="{{AUTODESK}}" target="_blank" rel="noopener">3D Viewer</a>
-      </div>
-
-      <iframe class="viewer" src="{{PDF}}" loading="lazy"></iframe>
+      <div class="section-title">📄 Drawing</div>
+      <a class="btn pdf" href="{{PDF}}" target="_blank" rel="noopener">
+        Open PDF (Full Screen)
+      </a>
+      <p class="note">Pinch-zoom in your phone’s PDF viewer.</p>
     </div>
 
-    <div class="foot">If the PDF looks old on phone, refresh twice or clear browser cache.</div>
-  </div>
+    <div class="card">
+      <div class="section-title">🧩 3D Model</div>
+      <a class="btn model" href="{{AUTODESK}}" target="_blank" rel="noopener">
+        Open 3D Model (Autodesk Viewer)
+      </a>
+      <p class="note">Opens in your browser (no app required).</p>
+    </div>
 
-  <script>
-    // Hide 3D button if no link
-    (function(){
-      var a = document.getElementById("viewerBtn");
-      if (!a) return;
-      var href = (a.getAttribute("href") || "").trim();
-      if (!href || href === "{{AUTODESK}}" || href === "#") a.style.display = "none";
-    })();
-  </script>
+  </div>
 </body>
 </html>
