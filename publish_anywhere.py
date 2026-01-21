@@ -277,30 +277,27 @@ def main():
 
     print("Copied stamped PDF + QR back to SOURCE folder:", src_dir)
 
+    # Autodesk link handling
+    autodesk_link = load_autodesk_link(dst_dir)
 
-# Autodesk link handling
-autodesk_link = load_autodesk_link(dst_dir)
+    if step_src:
+        ans = input("\nUpdate Autodesk link? (y/n, Enter = no): ").strip().lower()
 
-if step_src:
-    ans = input("\nUpdate Autodesk link? (y/n, Enter = no): ").strip().lower()
+        if ans == "y" or not autodesk_link:
+            print("Opening Autodesk Viewer upload...")
+            webbrowser.open(AUTODESK_UPLOAD_URL)
 
-    if ans == "y" or not autodesk_link:
-        print("Opening Autodesk Viewer upload...")
-        webbrowser.open(AUTODESK_UPLOAD_URL)
+            input("After you COPY the autode.sk link, press ENTER here...")
 
-        input("After you COPY the autode.sk link, press ENTER here...")
+            autodesk_link = try_get_clipboard_autodesk_link()
+            if not autodesk_link:
+                autodesk_link = input("Paste the https://autode.sk/... link here: ").strip()
 
-        autodesk_link = try_get_clipboard_autodesk_link()
-        if not autodesk_link:
-            autodesk_link = input(
-                "Paste the https://autode.sk/... link here: "
-            ).strip()
-
-        if autodesk_link.startswith(("https://autode.sk/", "http://autode.sk/")):
-            save_autodesk_link(dst_dir, autodesk_link)
-        else:
-            print("⚠ Not a valid autode.sk link. Keeping previous link.")
-            autodesk_link = load_autodesk_link(dst_dir)
+            if autodesk_link.startswith(("https://autode.sk/", "http://autode.sk/")):
+                save_autodesk_link(dst_dir, autodesk_link)
+            else:
+                print("⚠ Not a valid autode.sk link. Keeping previous link.")
+                autodesk_link = load_autodesk_link(dst_dir)
 
     # Update index.html with cache-bust so phones don't show old PDFs
     cache_bust = int(time.time())
