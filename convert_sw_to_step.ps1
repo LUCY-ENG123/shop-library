@@ -59,7 +59,6 @@ function Convert-PartToStep($swApp, $fullPath) {
 # Normalize folder
 $Folder = (Resolve-Path $Folder).Path
 $parts = Get-ChildItem $Folder -File -ErrorAction SilentlyContinue | Where-Object { $_.Extension -ieq ".sldprt" }
-Write-Host ("Found {0} SLDPRT file(s) in: {1}" -f $parts.Count, $Folder)
 
 
 if ($parts.Count -eq 0) {
@@ -67,30 +66,18 @@ if ($parts.Count -eq 0) {
   exit 0
 }
 
-# Try to connect to running SolidWorks first, then start if needed
-$swApp = $null
-
+# Try to start SolidWorks
 try {
-  $swApp = [System.Runtime.InteropServices.Marshal]::GetActiveObject("SldWorks.Application")
-  Write-Host "Connected to running SolidWorks."
-} catch {
-  Write-Host "No running SolidWorks instance found. Trying to start SolidWorks..."
-}
-
-if (-not $swApp) {
-  try {
     $swApp = New-Object -ComObject 'SldWorks.Application'
     $swApp.Visible = $false
-    Write-Host "Started new SolidWorks instance."
-  } catch {
+}
+catch {
     Write-Host "=========================================="
     Write-Host "⚠ SolidWorks COM FAILED"
     Write-Host $_.Exception.Message
     Write-Host "=========================================="
     exit 1
-  }
 }
-
 
 
 foreach ($p in $parts) {
