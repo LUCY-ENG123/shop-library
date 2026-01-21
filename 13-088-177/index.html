@@ -1,43 +1,146 @@
-<!--
-INSTRUCTIONS:
-1. Rename folder to PN-XXXX
-2. Rename PART.pdf → PN-XXXX.pdf
-3. Paste Autodesk Viewer link
-4. Change <h1>13-088-177</h1>								<!--PART NUMBER-->
-      <p class="subtitle">Scan QR → open drawing or rotate the 3D model</p>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>13-088-177</title>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#121a2b;
+      --text:#e7eefc;
+      --muted:#a9b7d0;
+      --line:rgba(255,255,255,.10);
+      --btn:#1f6feb;
+      --btn2:#2ea043;
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 10% 0%, #182548 0%, var(--bg) 55%);
+      color:var(--text);
+    }
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 14px 40px;
+    }
+    header{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:14px;
+    }
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+    }
+    h1{
+      margin:0;
+      font-size: 22px;
+      letter-spacing:.2px;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size: 13px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .btnrow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      padding: 14px;
+      border-bottom:1px solid var(--line);
+      background: rgba(0,0,0,.12);
+    }
+    a.btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      text-decoration:none;
+      color:white;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      transition: transform .05s ease, filter .12s ease;
+      user-select:none;
+    }
+    a.btn:hover{ filter: brightness(1.05); }
+    a.btn:active{ transform: scale(.98); }
+    .btn.primary{ background: var(--btn); }
+    .btn.good{ background: var(--btn2); }
+    .btn.gray{ background: rgba(255,255,255,.10); color: var(--text); }
+
+    .viewer{
+      height: calc(100vh - 210px);
+      min-height: 520px;
+      background: rgba(0,0,0,.25);
+    }
+    iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+      background:#111;
+    }
+    .footer{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align:center;
+      opacity:.9;
+    }
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: rgba(255,255,255,.08);
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>13-088-177</h1>
+        <p class="sub">Shop Library • Scan QR → open drawing</p>
+      </div>
+      <a class="btn gray" href="../">⬅ Back</a>
+    </header>
+
+    <section class="card">
+      <div class="btnrow">
+        <a class="btn primary" href="13-088-177.pdf?v=1768957378" target="_blank">📄 Open PDF</a>
+        <a class="btn good" href="https://autode.sk/4pSXquK" target="_blank">🧊 3D Viewer</a>
+      </div>
+
+      <div class="viewer">
+        <iframe src="PART.pdf?v=1"></iframe>
+      </div>
+    </section>
+
+    <div class="footer">
+      If the PDF looks outdated, refresh once. Part page: <code>PART</code>
     </div>
-
-    <!-- PDF -->
-<div class="card">
-  <div class="section-title">📄 Drawing</div>
-  <a class="btn pdf" href="13-088-177.pdf?v=1768947282" target="_blank" rel="noopener">
-    Open PDF (Full Screen)
-  </a>
-  <p class="note">Pinch-zoom in your phone’s PDF viewer.</p>
-</div>
-
-<!-- 3D MODEL -->
-<div class="card">
-  <div class="section-title">🧩 3D Model</div>
-
-  <!-- Paste Autodesk Viewer link in the href below (do not add comments inside the <a> tag) -->
-  <a class="btn model" href="https://autode.sk/4pSXquK" target="_blank" rel="noopener">
-    Open 3D Model (Autodesk Viewer)
-  </a>
-
-  <p class="note">Opens in your browser (no app required).</p>
-</div>
-
-
-
   </div>
 </body>
 </html>
-<!-- =========================
-     EDIT THESE 3 THINGS ONLY
-     1) PART NUMBER
-     2) PDF FILENAME
-     3) AUTODESK VIEWER LINK
-     (optional) STEP FILENAME
-========================= -->
 
