@@ -308,10 +308,11 @@ def main() -> None:
     # Autodesk link handling
     autodesk_link = load_autodesk_link(dst_dir)
 
-    if step_src:
-        ans = input("\nUpdate Autodesk link? (y/n, Enter = no): ").strip().lower()
+    if step_src and not autodesk_link:
+        print("\nNo Autodesk link found for this part.")
+        ans = input("Add Autodesk Viewer link now? (y/n): ").strip().lower()
 
-        if ans == "y" or not autodesk_link:
+        if ans == "y":
             print("Opening Autodesk Viewer upload...")
             webbrowser.open(AUTODESK_UPLOAD_URL)
 
@@ -319,13 +320,16 @@ def main() -> None:
 
             autodesk_link = try_get_clipboard_autodesk_link()
             if not autodesk_link:
-                autodesk_link = input("Paste the https://autode.sk/... link here: ").strip()
+                autodesk_link = input(
+                    "Paste the https://autode.sk/... link here: "
+                ).strip()
 
             if autodesk_link.startswith(("https://autode.sk/", "http://autode.sk/")):
                 save_autodesk_link(dst_dir, autodesk_link)
             else:
-                print("⚠ Not a valid autode.sk link. Keeping previous link.")
-                autodesk_link = load_autodesk_link(dst_dir)
+                print("⚠ Invalid Autodesk link. Skipping.")
+                autodesk_link = None
+
 
     # Update index.html with cache-bust so phones don't show old PDFs
     cache_bust = int(time.time())
