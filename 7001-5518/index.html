@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>7001-5518</title>
+
+<style>
+:root{
+  --bg:#0b1f3a;      /* deep blue */
+  --card:#ffffff;
+  --text:#0b0b0b;    /* bold black */
+  --muted:#3d3d3d;
+  --accent:#1f6feb;  /* blue button */
+  --dark:#1d1d1d;    /* dark button */
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container{
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 18px 14px 28px;
+}
+
+.card{
+  background: var(--card);
+  border-radius: 16px;
+  padding: 18px;
+  margin: 14px 0;
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
+}
+
+h1{
+  margin:0 0 6px 0;
+  font-size: 34px;
+  font-weight: 900;
+}
+
+.subtitle{
+  margin:0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.section-title{
+  margin:0 0 12px 0;
+  font-size: 22px;
+  font-weight: 900;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.btn{
+  display:block;
+  width: min(520px, 100%);
+  margin: 10px auto 0;
+  text-align:center;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 900;
+  text-decoration:none;
+  color:#fff;
+}
+
+.btn.pdf{ background: var(--accent); }
+.btn.model{ background: var(--dark); }
+
+.note{
+  margin:10px 0 0;
+  text-align:center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+</style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="card">
+      <h1>7001-5518</h1>
+      <p class="subtitle">Scan QR → open drawing or rotate the 3D model</p>
+    </div>
+
+    <div class="card">
+      <div class="section-title">📄 Drawing</div>
+      <a class="btn pdf" href="7001-5518.pdf?v=1769094474" target="_blank" rel="noopener">
+        Open PDF (Full Screen)
+      </a>
+      <p class="note">Pinch-zoom in your phone’s PDF viewer.</p>
+    </div>
+
+    <div class="card">
+      <div class="section-title">🧩 3D Model</div>
+      <a class="btn model" href="https://autode.sk/4k1TCGg" target="_blank" rel="noopener">
+        Open 3D Model (Autodesk Viewer)
+      </a>
+      <p class="note">Opens in your browser (no app required).</p>
+    </div>
+
+  </div>
+</body>
+</html>
