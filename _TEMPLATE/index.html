@@ -3,34 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>{{PART}}</title>
-
 <style>
 :root{
-  --bg:#0b1f3a;      /* deep blue */
+  --bg:#0b1f3a;
   --card:#ffffff;
-  --text:#0b0b0b;    /* bold black */
+  --text:#0b0b0b;
   --muted:#3d3d3d;
-  --accent:#1f6feb;  /* blue button */
-  --dark:#1d1d1d;    /* dark button */
+  --accent:#1f6feb;
+  --dark:#1d1d1d;
+  --scan:#c0392b;
 }
-
 *{ box-sizing:border-box; }
-
 body{
   margin:0;
   font-family: Arial, Helvetica, sans-serif;
   background: var(--bg);
   color: var(--text);
 }
-
 .container{
   max-width: 760px;
   margin: 0 auto;
   padding: 18px 14px 28px;
 }
-
 .card{
   background: var(--card);
   border-radius: 16px;
@@ -38,20 +33,17 @@ body{
   margin: 14px 0;
   box-shadow: 0 8px 18px rgba(0,0,0,.15);
 }
-
 h1{
   margin:0 0 6px 0;
   font-size: 34px;
   font-weight: 900;
 }
-
 .subtitle{
   margin:0;
   font-size: 16px;
   font-weight: 700;
   color: var(--muted);
 }
-
 .section-title{
   margin:0 0 12px 0;
   font-size: 22px;
@@ -60,7 +52,6 @@ h1{
   align-items:center;
   gap:10px;
 }
-
 .btn{
   display:block;
   width: min(520px, 100%);
@@ -73,10 +64,16 @@ h1{
   text-decoration:none;
   color:#fff;
 }
-
 .btn.pdf{ background: var(--accent); }
 .btn.model{ background: var(--dark); }
-
+.btn.scan{
+  background: var(--scan);
+  margin-top: 0;
+  font-size: 20px;
+  padding: 18px 16px;
+  letter-spacing: 0.5px;
+}
+.btn.scan:hover{ background: #a93226; }
 .note{
   margin:10px 0 0;
   text-align:center;
@@ -84,15 +81,18 @@ h1{
   font-weight: 700;
   color: var(--muted);
 }
+.divider{
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 14px 0;
+}
 </style>
 </head>
-
 <body>
   <div class="container">
-
     <div class="card">
       <h1>{{PART}}</h1>
-      <p class="subtitle">Scan QR → open drawing or rotate the 3D model</p>
+      <p class="subtitle">Scan QR → open drawing, rotate the 3D model, or scan the part for QC</p>
     </div>
 
     <div class="card">
@@ -100,7 +100,7 @@ h1{
       <a class="btn pdf" href="{{PDF}}" target="_blank" rel="noopener">
         Open PDF (Full Screen)
       </a>
-      <p class="note">Pinch-zoom in your phone’s PDF viewer.</p>
+      <p class="note">Pinch-zoom in your phone's PDF viewer.</p>
     </div>
 
     <div class="card">
@@ -109,6 +109,14 @@ h1{
         Open 3D Model (Autodesk Viewer)
       </a>
       <p class="note">Opens in your browser (no app required).</p>
+    </div>
+
+    <div class="card">
+      <div class="section-title">🔍 Quality Control</div>
+      <a class="btn scan" href="scan.html">
+        🔍 Scan Part to Compare
+      </a>
+      <p class="note">Scan physical part with Polycam · compare against reference model · generate QC report.</p>
     </div>
 
   </div>
