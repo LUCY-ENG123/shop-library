@@ -20,6 +20,7 @@ BASE_URL = "https://lucy-eng123.github.io/shop-library/"
 REPO_ROOT = os.path.dirname(os.path.abspath(__file__))  # this script lives in shop-library
 TEMPLATE_DIR = "_TEMPLATE"
 TEMPLATE_FILE = "index.html"
+SCAN_TEMPLATE_FILE = "scan.html"   # ← NEW: scan page template
 
 # QR placement (tweak once)
 QR_SIZE_INCHES = 1.25
@@ -51,7 +52,6 @@ def has_unpushed_commits(repo_dir: str) -> bool:
     subprocess.call(["git", "fetch"], cwd=repo_dir)
     try:
         out = run_git(repo_dir, ["status", "-sb"])
-        # Example: "## main...origin/main [ahead 1]"
         return "[ahead" in out
     except Exception:
         return False
@@ -67,11 +67,6 @@ def prompt_push(repo_dir: str) -> None:
 
 
 def open_github_desktop_if_needed(repo_dir: str) -> None:
-    """
-    Opens GitHub Desktop ONLY if:
-      - working tree has changes, OR
-      - repo has unpushed commits
-    """
     try:
         needs_attention = has_uncommitted_changes(repo_dir) or has_unpushed_commits(repo_dir)
         if not needs_attention:
@@ -82,7 +77,6 @@ def open_github_desktop_if_needed(repo_dir: str) -> None:
             print("GitHub Desktop already running.")
             return
 
-        # Try common install locations
         possible_paths = [
             rf"C:\Users\{os.getlogin()}\AppData\Local\GitHubDesktop\GitHubDesktop.exe",
             r"C:\Program Files\GitHub Desktop\GitHubDesktop.exe",
@@ -104,13 +98,6 @@ def open_github_desktop_if_needed(repo_dir: str) -> None:
 # File picking helpers
 # ============================
 def find_publish_dir(start_dir: str) -> str:
-    """
-    Preferred SOURCE folder selection:
-
-    1) If you're already in a folder named 'QR', use it.
-    2) Else if there is a 'QR' subfolder that contains a PDF, use that.
-    3) Otherwise publish from start_dir.
-    """
     if os.path.basename(start_dir).lower() == "qr":
         return start_dir
 
@@ -152,7 +139,6 @@ def pick_step(src_dir: str) -> Optional[str]:
 
 
 def part_name_from_pdf(pdf_path: str) -> str:
-    # Use the PDF filename as the part number
     return os.path.splitext(os.path.basename(pdf_path))[0]
 
 
@@ -172,11 +158,6 @@ def ensure_qr_png(dst_dir: str, part_name: str) -> str:
 
 
 def stamp_pdf_overwrite(pdf_in: str, qr_png: str, dst_dir: str, part_name: str) -> str:
-    """
-    Stamps QR onto page 1, writes final PDF to:
-      dst_dir\<part_name>.pdf
-    Returns output PDF path.
-    """
     out_pdf = os.path.join(dst_dir, f"{part_name}.pdf")
 
     reader = PdfReader(pdf_in)
@@ -260,12 +241,32 @@ def update_index_html(dst_dir: str, part_name: str, autodesk_link: str | None, c
     print("Updated index.html")
 
 
+def update_scan_html(dst_dir: str, part_name: str):
+    """
+    Copies _TEMPLATE/scan.html into the part folder,
+    replacing {{PART}} with the actual part name so the
+    page knows which STEP file to load and what to display.
+    """
+    template_path = os.path.join(REPO_ROOT, TEMPLATE_DIR, SCAN_TEMPLATE_FILE)
+    if not os.path.exists(template_path):
+        print(f"⚠ scan.html template not found at: {template_path}")
+        print("  Skipping scan page generation. Add scan.html to _TEMPLATE/ to enable QC scanning.")
+        return
+
+    html = open(template_path, "r", encoding="utf-8").read()
+    html = html.replace("{{PART}}", part_name)
+
+    out_path = os.path.join(dst_dir, "scan.html")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(html)
+
+    print("Generated scan.html")
+
 
 # ============================
 # Main
 # ============================
 def main() -> None:
-    # Run from any folder OR pass in a folder path
     start_dir = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.getcwd()
     src_dir = find_publish_dir(start_dir)
 
@@ -285,7 +286,7 @@ def main() -> None:
 
     step_src = pick_step(src_dir)
 
-    # Copy STEP if found (stable name)
+    # Copy STEP if found
     if step_src:
         ext = os.path.splitext(step_src)[1].lower()
         step_dst = os.path.join(dst_dir, f"{part_name}{ext}")
@@ -294,13 +295,13 @@ def main() -> None:
     else:
         print("⚠ No STEP found in SOURCE folder (ok if PDF-only).")
 
-    # Make a fresh QR every run (ensures it always matches your URL/part)
+    # Make a fresh QR
     qr_png = ensure_qr_png(dst_dir, part_name)
 
-    # Stamp directly from the SOURCE PDF -> output into repo folder as {part}.pdf
+    # Stamp PDF
     out_pdf = stamp_pdf_overwrite(pdf_src, qr_png, dst_dir, part_name)
 
-    # Copy stamped PDF + QR PNG back into the SOURCE folder (usually ...\ASAP\QR)
+    # Copy stamped PDF + QR back into SOURCE folder
     shutil.copy2(out_pdf, os.path.join(src_dir, os.path.basename(out_pdf)))
     shutil.copy2(qr_png, os.path.join(src_dir, os.path.basename(qr_png)))
     print("Copied stamped PDF + QR back to SOURCE folder:", src_dir)
@@ -330,10 +331,12 @@ def main() -> None:
                 print("⚠ Invalid Autodesk link. Skipping.")
                 autodesk_link = None
 
-
-    # Update index.html with cache-bust so phones don't show old PDFs
+    # Update index.html
     cache_bust = int(time.time())
     update_index_html(dst_dir, part_name, autodesk_link, cache_bust)
+
+    # ← NEW: Generate scan.html for this part
+    update_scan_html(dst_dir, part_name)
 
     page_url = BASE_URL.rstrip("/") + "/" + quote(part_name) + "/"
 
@@ -341,10 +344,9 @@ def main() -> None:
     print("Page URL   :", page_url)
     print("Repo folder:", dst_dir)
 
-    # Open GitHub Desktop only if needed
     open_github_desktop_if_needed(REPO_ROOT)
 
-    # ---- Git checks (safe) ----
+    # Git checks
     try:
         if has_uncommitted_changes(REPO_ROOT):
             print("\n⚠ Git: You have uncommitted changes.")
