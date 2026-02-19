@@ -269,7 +269,7 @@ h1 {
 </div>
 
 <!-- Load passwords from config file -->
-<script src="/passwords.js"></script>
+
 
 <script>
 function tryUnlock() {
@@ -277,13 +277,13 @@ function tryUnlock() {
   const errorEl = document.getElementById('lock-error');
   const val = input.value.trim();
 
-  if (val === PASSWORDS.qc) {
+  if (val === QC_PASSWORD) {
     unlock('qc');
-  } else if (val === PASSWORDS.customer) {
+  } else if (val === CUSTOMER_PASSWORD) {
     unlock('customer');
   } else {
     input.classList.add('error');
-    errorEl.textContent = 'Incorrect password. Please try again.';
+    errorEl.classList.add('show');
     input.value = '';
     setTimeout(() => input.classList.remove('error'), 400);
   }
