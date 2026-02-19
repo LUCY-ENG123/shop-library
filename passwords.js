@@ -10,6 +10,6 @@
 // =============================================
 
 const PASSWORDS = {
-  customer: "asap-customer",   // ← change this anytime
-  qc:       "asap-qc-2024"     // ← change this anytime
+  customer: "asapcust",   // ← change this anytime
+  qc:       "asapqc"     // ← change this anytime
 };
