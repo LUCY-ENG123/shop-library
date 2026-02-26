@@ -421,7 +421,11 @@ body {
 
   <div class="card">
     <div class="card-title">📄 Reference Drawing</div>
-    <iframe class="pdf-frame" src="{{PDF}}#toolbar=0" title="Engineering Drawing"></iframe>
+    <div style="background:#fff;border-radius:8px;overflow:hidden;width:100%;height:420px;">
+      <object data="{{PDF}}" type="application/pdf" width="100%" height="100%">
+        <iframe src="https://docs.google.com/viewer?url=https://lucy-eng123.github.io/shop-library/ASAP/ASAP.pdf&embedded=true" width="100%" height="100%" style="border:none;"></iframe>
+      </object>
+    </div>
     <a class="pdf-btn" href="{{PDF}}" target="_blank">↗ Open Full Drawing in New Tab</a>
   </div>
 
