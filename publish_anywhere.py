@@ -306,30 +306,37 @@ def main() -> None:
     shutil.copy2(qr_png, os.path.join(src_dir, os.path.basename(qr_png)))
     print("Copied stamped PDF + QR back to SOURCE folder:", src_dir)
 
-    # Autodesk link handling
+# Autodesk link handling
     autodesk_link = load_autodesk_link(dst_dir)
 
-    if step_src and not autodesk_link:
-        print("\nNo Autodesk link found for this part.")
-        ans = input("Add Autodesk Viewer link now? (y/n): ").strip().lower()
+    if step_src:
+        if autodesk_link:
+            print(f"\nExisting Autodesk link: {autodesk_link}")
+            ans = input("Re-upload to Autodesk Viewer (link expired)? (y/n): ").strip().lower()
+            if ans == "y":
+                autodesk_link = None  # clear so we go through upload flow
 
-        if ans == "y":
-            print("Opening Autodesk Viewer upload...")
-            webbrowser.open(AUTODESK_UPLOAD_URL)
+        if not autodesk_link:
+            print("\nNo Autodesk link found — or re-uploading.")
+            ans = input("Add Autodesk Viewer link now? (y/n): ").strip().lower()
 
-            input("After you COPY the autode.sk link, press ENTER here...")
+            if ans == "y":
+                print("Opening Autodesk Viewer upload...")
+                webbrowser.open(AUTODESK_UPLOAD_URL)
 
-            autodesk_link = try_get_clipboard_autodesk_link()
-            if not autodesk_link:
-                autodesk_link = input(
-                    "Paste the https://autode.sk/... link here: "
-                ).strip()
+                input("After you COPY the autode.sk link, press ENTER here...")
 
-            if autodesk_link.startswith(("https://autode.sk/", "http://autode.sk/")):
-                save_autodesk_link(dst_dir, autodesk_link)
-            else:
-                print("⚠ Invalid Autodesk link. Skipping.")
-                autodesk_link = None
+                autodesk_link = try_get_clipboard_autodesk_link()
+                if not autodesk_link:
+                    autodesk_link = input(
+                        "Paste the https://autode.sk/... link here: "
+                    ).strip()
+
+                if autodesk_link.startswith(("https://autode.sk/", "http://autode.sk/")):
+                    save_autodesk_link(dst_dir, autodesk_link)
+                else:
+                    print("⚠ Invalid Autodesk link. Skipping.")
+                    autodesk_link = None
 
     # Update index.html
     cache_bust = int(time.time())
