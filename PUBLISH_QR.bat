@@ -1,58 +1,87 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 
-REM If dropped onto the bat, use that folder; otherwise current folder
-if "%~1"=="" (
-  set "SRC=%cd%"
+REM ── Resolve source folder ──────────────────────────────────────────────────
+REM When used via Send To, Windows passes the selected item as %1
+REM When double-clicked, fall back to current directory
+if not "%~1"=="" (
+    set "SRC=%~1"
 ) else (
-  set "SRC=%~1"
+    set "SRC=%cd%"
 )
+
 REM Strip trailing backslash if present
-if "%SRC:~-1%"=="\" set "SRC=%SRC:~0,-1%"
+if "!SRC:~-1!"=="\" set "SRC=!SRC:~0,-1!"
 
-REM Safety: must be a folder named QR
-for %%I in ("%SRC%") do set "FNAME=%%~nxI"
-if /I not "%FNAME%"=="QR" (
-  echo.
-  echo ERROR: Must run on a folder named "QR"
-  echo Selected: %SRC%
-  pause
-  exit /b 1
+REM ── Safety check: must be a folder named QR ────────────────────────────────
+for %%I in ("!SRC!") do set "FNAME=%%~nxI"
+if /I not "!FNAME!"=="QR" (
+    echo.
+    echo ERROR: Must run on a folder named "QR"
+    echo Selected: !SRC!
+    echo.
+    echo HOW TO USE:
+    echo   Right-click your QR folder ^> Send To ^> PUBLISH_QR
+    echo   OR drag the QR folder onto PUBLISH_QR.bat directly
+    echo.
+    pause
+    exit /b 1
 )
 
-REM === Paths ===
+REM ── Paths ──────────────────────────────────────────────────────────────────
 set "REPO_ROOT=X:\ASAP_MAIN\ENGINEERING\CUSTOMER\GITHUB REPO\SHOP LIBRARY\shop-library"
 set "PY_PUBLISH=%REPO_ROOT%\publish_anywhere.py"
+set "LOG=%TEMP%\publish_qr_log.txt"
 
 echo ==========================================
-echo PUBLISH QR (MANUAL STEP)
-echo TARGET: %SRC%
-echo PY: %PY_PUBLISH%
+echo  PUBLISH QR
+echo  TARGET : !SRC!
+echo  SCRIPT : %PY_PUBLISH%
 echo ==========================================
 
-REM Hard fail if python file not founds
+REM ── Verify publish script exists ───────────────────────────────────────────
 if not exist "%PY_PUBLISH%" (
-  echo.
-  echo ERROR: Cannot find publish_anywhere.py here:
-  echo %PY_PUBLISH%
-  echo.
-  pause
-  exit /b 1
+    echo.
+    echo ERROR: Cannot find publish_anywhere.py at:
+    echo %PY_PUBLISH%
+    echo.
+    pause
+    exit /b 1
 )
 
+REM ── STEP check ─────────────────────────────────────────────────────────────
 echo.
-echo --- STEP CHECK (manual for now) ---
-if exist "%SRC%\*.step" (
-  echo STEP found in QR folder. Good.
+echo --- STEP CHECK ---
+if exist "!SRC!\*.step" (
+    echo STEP file found in QR folder. Good.
 ) else (
-  echo [WARN] No STEP found in QR folder.
-  echo        (Manual STEP creation for now is OK.)
+    echo [WARN] No STEP file found in QR folder.
+    echo        Manual STEP creation is OK for now.
 )
 
+REM ── Run Python publish ─────────────────────────────────────────────────────
 echo.
-echo --- PUBLISH QR ---
-echo --- Running Python ---
-python "%PY_PUBLISH%" "%SRC%" >> "%TEMP%\publish_qr_log.txt" 2>&1
-echo Python exit code: %ERRORLEVEL% >> "%TEMP%\publish_qr_log.txt"
-type "%TEMP%\publish_qr_log.txt"
+echo --- RUNNING PUBLISH ---
+echo Log: %LOG%
+echo.
+
+REM Clear old log
+if exist "%LOG%" del "%LOG%"
+
+python "%PY_PUBLISH%" "!SRC!" > "%LOG%" 2>&1
+set "EXITCODE=%ERRORLEVEL%"
+
+type "%LOG%"
+echo.
+echo --- Python exit code: %EXITCODE% ---
+
+if %EXITCODE% NEQ 0 (
+    echo.
+    echo PUBLISH FAILED. See log above.
+) else (
+    echo.
+    echo PUBLISH COMPLETE.
+)
+
 pause
+endlocal
