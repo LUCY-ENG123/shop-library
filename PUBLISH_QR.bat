@@ -7,6 +7,8 @@ if "%~1"=="" (
 ) else (
   set "SRC=%~1"
 )
+REM Strip trailing backslash if present
+if "%SRC:~-1%"=="\" set "SRC=%SRC:~0,-1%"
 
 REM Safety: must be a folder named QR
 for %%I in ("%SRC%") do set "FNAME=%%~nxI"
@@ -49,6 +51,15 @@ if exist "%SRC%\*.step" (
 
 echo.
 echo --- PUBLISH QR ---
-python "%PY_PUBLISH%" "%SRC%"
+echo --- Running Python ---
+python "%PY_PUBLISH%" "%SRC%" >> "%TEMP%\publish_qr_log.txt" 2>&1
+echo Python exit code: %ERRORLEVEL% >> "%TEMP%\publish_qr_log.txt"
+type "%TEMP%\publish_qr_log.txt"
+pause
+```
+
+Then try the Send To again. Even if it flashes, check this file:
+```
+C:\Users\[YourUsername]\AppData\Local\Temp\publish_qr_log.txt
 
 pause
