@@ -30,7 +30,7 @@ echo TARGET: %SRC%
 echo PY: %PY_PUBLISH%
 echo ==========================================
 
-REM Hard fail if python file not found
+REM Hard fail if python file not founds
 if not exist "%PY_PUBLISH%" (
   echo.
   echo ERROR: Cannot find publish_anywhere.py here:
@@ -55,11 +55,4 @@ echo --- Running Python ---
 python "%PY_PUBLISH%" "%SRC%" >> "%TEMP%\publish_qr_log.txt" 2>&1
 echo Python exit code: %ERRORLEVEL% >> "%TEMP%\publish_qr_log.txt"
 type "%TEMP%\publish_qr_log.txt"
-pause
-```
-
-Then try the Send To again. Even if it flashes, check this file:
-```
-C:\Users\[YourUsername]\AppData\Local\Temp\publish_qr_log.txt
-
 pause
