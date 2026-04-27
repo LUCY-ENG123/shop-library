@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>102049</title>
+<style>
+:root {
+  --bg: #0b1f3a;
+  --card: #ffffff;
+  --text: #0b0b0b;
+  --muted: #3d3d3d;
+  --accent: #1f6feb;
+  --dark: #1d1d1d;
+  --scan: #c0392b;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── PASSWORD SCREEN ── */
+#lock-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+.lock-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px 28px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  text-align: center;
+}
+.lock-logo { font-size: 42px; margin-bottom: 8px; }
+.lock-company {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+.lock-part {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--bg);
+  margin-bottom: 6px;
+}
+.lock-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.lock-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: 3px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+  margin-bottom: 14px;
+}
+.lock-input:focus { border-color: var(--accent); }
+.lock-input.error {
+  border-color: #e74c3c;
+  background: #fff5f5;
+  animation: shake 0.3s ease;
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+.lock-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--bg);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.lock-btn:hover { opacity: 0.85; }
+.lock-btn:active { opacity: 0.7; }
+
+.lock-error {
+  display: none;
+  background: #fde8e8;
+  border: 1px solid #f5c6c6;
+  border-radius: 8px;
+  color: #c0392b;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 14px;
+  margin-top: 14px;
+}
+.lock-error.show { display: block; }
+
+.lock-hint {
+  font-size: 12px;
+  color: #bbb;
+  margin-top: 20px;
+}
+
+/* ── MAIN CONTENT ── */
+#main-content { display: none; }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 18px 14px 28px;
+}
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 18px;
+  margin: 14px 0;
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
+}
+h1 { margin: 0 0 6px 0; font-size: 34px; font-weight: 900; }
+.subtitle { margin: 0; font-size: 16px; font-weight: 700; color: var(--muted); }
+.section-title {
+  margin: 0 0 12px 0;
+  font-size: 22px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn {
+  display: block;
+  width: min(520px, 100%);
+  margin: 10px auto 0;
+  text-align: center;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 900;
+  text-decoration: none;
+  color: #fff;
+}
+.btn.pdf   { background: var(--accent); }
+.btn.model { background: var(--dark); }
+.btn.scan  { background: var(--scan); font-size: 20px; padding: 18px 16px; }
+.note {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.access-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+.badge-customer { background: #e3f0ff; color: #1f6feb; }
+.badge-qc       { background: #fde8e8; color: #c0392b; }
+.lock-again-btn {
+  display: block;
+  text-align: center;
+  margin: 6px auto 0;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px;
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="lock-screen">
+  <div class="lock-card">
+    <div class="lock-logo">🔒</div>
+    <div class="lock-company">ASAP Metal Fab</div>
+    <div class="lock-part">102049</div>
+    <div class="lock-subtitle">Enter your access password to continue</div>
+
+    <input
+      class="lock-input"
+      type="password"
+      id="password-input"
+      placeholder="••••••••"
+      autocomplete="off"
+      onkeydown="if(event.key==='Enter') tryUnlock()"
+    >
+    <button class="lock-btn" onclick="tryUnlock()">Unlock →</button>
+    <div class="lock-error" id="lock-error">⚠️ Incorrect password. Please try again.</div>
+    <div class="lock-hint">Contact ASAP Metal Fab for access</div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main-content">
+  <div class="container">
+    <div class="card">
+      <h1>102049 <span class="access-badge" id="access-badge"></span></h1>
+      <p class="subtitle" id="access-subtitle"></p>
+      <button class="lock-again-btn" onclick="lockPage()">🔒 Lock</button>
+    </div>
+    <div class="card">
+      <div class="section-title">📄 Drawing</div>
+      <a class="btn pdf" href="102049.pdf?v=1777312916" target="_blank" rel="noopener">Open PDF (Full Screen)</a>
+      <p class="note">Pinch-zoom in your phone's PDF viewer.</p>
+    </div>
+    <div class="card">
+      <div class="section-title">🧩 3D Model</div>
+      <a class="btn model" href="https://autode.sk/4sVc1qT" target="_blank" rel="noopener">Open 3D Model (Autodesk Viewer)</a>
+      <p class="note">Opens in your browser (no app required).</p>
+    </div>
+    <div class="card" id="qc-card" style="display:none">
+      <div class="section-title">🔍 Quality Control</div>
+      <a class="btn scan" href="scan.html">🔍 QC Inspection</a>
+      <p class="note">Photo inspection · AI analysis · generate QC report..</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var CUSTOMER_PASSWORD = "asapcust"; var QC_PASSWORD = "asapqc";
+// To change passwords: edit this file in _TEMPLATE, then run backfill_index.py
+var CUSTOMER_PASSWORD = "asapcust";
+var QC_PASSWORD       = "asapqc";
+
+var CUSTOMER_PASSWORD = "asapcust";
+var QC_PASSWORD = "asapqc";
+
+function tryUnlock() {
+  var input = document.getElementById('password-input');
+  var errorEl = document.getElementById('lock-error');
+  var val = input.value.trim();
+
+  if (val === QC_PASSWORD) {
+    unlock('qc');
+  } else if (val === CUSTOMER_PASSWORD) {
+    unlock('customer');
+  } else {
+    // Show error
+    input.classList.add('error');
+    errorEl.classList.add('show');
+    input.value = '';
+    input.focus();
+    setTimeout(function() {
+      input.classList.remove('error');
+    }, 400);
+  }
+}
+
+function unlock(level) {
+  document.getElementById('lock-screen').style.display = 'none';
+  document.getElementById('main-content').style.display = 'block';
+  document.getElementById('lock-error').classList.remove('show');
+
+  var badge    = document.getElementById('access-badge');
+  var subtitle = document.getElementById('access-subtitle');
+
+  if (level === 'qc') {
+    badge.textContent = 'QC Access';
+    badge.className = 'access-badge badge-qc';
+    subtitle.textContent = 'Full access — drawing, 3D model, and QC scan';
+    document.getElementById('qc-card').style.display = 'block';
+  } else {
+    badge.textContent = 'Customer Access';
+    badge.className = 'access-badge badge-customer';
+    subtitle.textContent = 'View drawing and 3D model';
+    document.getElementById('qc-card').style.display = 'none';
+  }
+
+  sessionStorage.setItem('asap-access', level);
+}
+
+function lockPage() {
+  sessionStorage.removeItem('asap-access');
+  document.getElementById('lock-screen').style.display = 'flex';
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('password-input').value = '';
+  document.getElementById('lock-error').classList.remove('show');
+}
+
+// Auto-unlock if already authenticated this session
+var saved = sessionStorage.getItem('asap-access');
+if (saved === 'qc' || saved === 'customer') {
+  unlock(saved);
+}
+</script>
+</body>
+</html>
